@@ -1,18 +1,42 @@
-const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcryptjs = require("bcryptjs");
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://admin:admin@cluster.hcukc.mongodb.net/dexpr');
+mongoose.connect("mongodb+srv://admin:admin@cluster.hcukc.mongodb.net/dexpr");
 
 let mdb = mongoose.connection;
-mdb.on('error', console.error.bind(console, 'connection error'));
-mdb.once('open', callback => {});
+mdb.on("error", console.error.bind(console, "connection error"));
+mdb.once("open", (callback) => {});
 
 let userSchema = mongoose.Schema({
-    username: String,
-    password: String,
-    email: String,
-    age: Number
+  username: String,
+  password: String,
+  email: String,
+  age: Number,
 });
 
-let User = mongoose.model('user_collection', userSchema);
+let User = mongoose.model("user_collection", userSchema);
+
+exports.index = (req, res) => {
+  res.render("index", {
+    title: "Home",
+  });
+};
+
+exports.signUp = (req, res) => {
+  res.render("signUp", {
+    title: "Sign up",
+  });
+};
+
+exports.logIn = (req, res) => {
+  res.render("login", {
+    title: "Log in",
+  });
+};
+
+exports.settings = (req, res) => {
+  res.render("settings", {
+    title: "Settings",
+  });
+};
