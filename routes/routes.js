@@ -50,6 +50,13 @@ exports.getLogin = (req, res) => {
 exports.getSettings = (req, res) => {
   User.findOne({ username: req.session.user.username }, (err, user) => {
     if (err) return console.error(err);
+    user = {
+      email: user.email,
+      age: user.age,
+      boardGame: user.boardGame,
+      skillLevel: user.skillLevel,
+      timeSpent: user.timeSpent
+    }
     res.render("settings", {
       title: "Settings",
       settings: user,
@@ -83,10 +90,24 @@ exports.postLogin = (req, res) => {
 };
 
 exports.postSettings = (req, res) => {
-  User.updateOne({ name: req.session.user.username }, req.body, (err, user) => {
-    console.log("Updated user: " + user);
-    res.redirect("/");
-  });
+  User.findOne({ username: req.session.user.username }, (err, user) => {
+    if (err) return console.error(err);
+
+    if (bcryptjs.compareSync(req.body.currPassword, user.password)) {
+      if (req.body.newPassword != '') {
+        req.body.password = bcryptjs.hashSync(req.body.newPassword);
+      }
+
+      delete req.body.currPassword;
+      delete req.body.newPassword;
+
+      User.updateOne({ username: user.username }, req.body, (err, user) => {
+        if (err) return console.error(err);
+        console.log("Updated user: " + user);
+        res.redirect("/");
+      });
+    }
+  })
 };
 
 exports.logout = (req, res) => {

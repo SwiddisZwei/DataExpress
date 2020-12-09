@@ -3,27 +3,27 @@ extends layout
 block content
     form(id='loginForm' method='post' action='/signup')
         p Username: 
-            input(type='text' name='username')
+            input(type='text' name='username' id='username')
         p Password: 
-            input(type='password' name='password')
+            input(type='password' name='password' id='password')
         p Email: 
-            input(type='text', name='email')
+            input(type='text', name='email' id='email')
         p Age: 
-            input(type='number' name='age')
+            input(type='number' name='age' id='age')
         p Favorite Board Game? 
-            select(name='boardGame')
+            select(name='boardGame' id='boardGame')
                 option(value='chess') Chess
                 option(value='go') Go
                 option(value='draughts') Draughts
                 option(value='shogi') Shogi
         p Skill at Favorite Game? 
-            select(name='skillLevel')
+            select(name='skillLevel' id='skillLevel')
                 option(value='beginner') Beginner
                 option(value='intermediate') Intermediate
                 option(value='advanced') Advanced
                 option(value='expert') Expert
         p How often do you play it? 
-            select(name='timeSpent')
+            select(name='timeSpent' id='timeSpent')
                 option(value='02h') 0-2 Hours/week
                 option(value='34h') 3-4 Hours/week
                 option(value='56h') 5-6 Hours/week
