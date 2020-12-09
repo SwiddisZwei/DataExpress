@@ -23,13 +23,13 @@ exports.index = (req, res) => {
   });
 };
 
-exports.signUp = (req, res) => {
+exports.signup = (req, res) => {
   res.render("signup", {
     title: "Sign up",
   });
 };
 
-exports.logIn = (req, res) => {
+exports.login = (req, res) => {
   res.render("login", {
     title: "Log in",
   });
