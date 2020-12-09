@@ -29,9 +29,15 @@ let userSchema = mongoose.Schema({
 let User = mongoose.model("user", userSchema);
 
 exports.index = (req, res) => {
+  res.cookie("prev", Date.now(), {
+    maxAge: 365 * 24 * 3600 * 1000,
+  });
   res.render("index", {
     title: "Home",
     user: req.session.user ? req.session.user.username : undefined,
+    previousVisit: req.cookies.prev
+      ? `${new Date(Number(req.cookies.prev)).toLocaleString()}`
+      : "Never. Welcome!",
   });
 };
 
@@ -55,8 +61,8 @@ exports.getSettings = (req, res) => {
       age: user.age,
       boardGame: user.boardGame,
       skillLevel: user.skillLevel,
-      timeSpent: user.timeSpent
-    }
+      timeSpent: user.timeSpent,
+    };
     res.render("settings", {
       title: "Settings",
       settings: user,
@@ -94,7 +100,7 @@ exports.postSettings = (req, res) => {
     if (err) return console.error(err);
 
     if (bcryptjs.compareSync(req.body.currPassword, user.password)) {
-      if (req.body.newPassword != '') {
+      if (req.body.newPassword != "") {
         req.body.password = bcryptjs.hashSync(req.body.newPassword);
       }
 
@@ -107,7 +113,7 @@ exports.postSettings = (req, res) => {
         res.redirect("/");
       });
     }
-  })
+  });
 };
 
 exports.logout = (req, res) => {

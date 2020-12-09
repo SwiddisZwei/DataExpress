@@ -4,7 +4,8 @@ const express = require("express"),
   pug = require("pug"),
   path = require("path"),
   routes = require("./routes/routes"),
-  bodyParser = require("body-parser");
+  bodyParser = require("body-parser"),
+  cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -29,7 +30,8 @@ app.use(
     secret: "absolutely_secure",
     saveUninitialized: true,
     resave: true,
-  })
+  }),
+  cookieParser()
 );
 
 app.get("/", routes.index);

@@ -6,3 +6,5 @@ block content
         h3 Currently logged in as #{user}
     else
         h3 Currently not logged in
+    if previousVisit
+        p Latest visit: #{previousVisit}
