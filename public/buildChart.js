@@ -78,7 +78,6 @@ fetch("/api")
   .then((res) => res.json())
   .then((data) => {
     let chartData = processData(data);
-    console.log(chartData);
 
     let chart = new Chart(ctx, {
       type: "horizontalBar",
@@ -100,4 +99,6 @@ fetch("/api")
         },
       },
     });
+
+    chart.update();
   });
