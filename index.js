@@ -1,5 +1,6 @@
 const { urlencoded } = require("body-parser");
 const express = require("express"),
+  expressSession = require("express-session"),
   pug = require("pug"),
   path = require("path"),
   routes = require("./routes/routes"),
@@ -15,12 +16,29 @@ let urlEncodedParser = bodyParser.urlencoded({
   extended: true,
 });
 
+const checkAuth = (req, res, next) => {
+  if (req.session.user && req.session.user.isAuthenticated) {
+    next();
+  } else {
+    res.redirect("/");
+  }
+};
+
+app.use(
+  expressSession({
+    secret: "absolutely_secure",
+    saveUninitialized: true,
+    resave: true,
+  })
+);
+
 app.get("/", routes.index);
 app.get("/signup", routes.getSignup);
 app.post("/signup", urlEncodedParser, routes.postSignup);
 app.get("/login", routes.getLogin);
 app.post("/login", urlEncodedParser, routes.postLogin);
-app.get("/settings", routes.getSettings);
-app.post("/settings", urlEncodedParser, routes.postSettings);
+app.get("/logout", routes.logout);
+app.get("/settings", checkAuth, routes.getSettings);
+app.post("/settings", checkAuth, urlEncodedParser, routes.postSettings);
 
 app.listen(3000);

@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb+srv://admin:admin@cluster.hcukc.mongodb.net/dexpr?retryWrites=true&w=majority");
+mongoose.connect(
+  "mongodb+srv://admin:admin@cluster.hcukc.mongodb.net/dexpr?retryWrites=true&w=majority"
+);
 
 let mdb = mongoose.connection;
 mdb.on("error", console.error.bind(console, "connection error"));
@@ -35,20 +37,24 @@ exports.getLogin = (req, res) => {
   });
 };
 
+exports.logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.redirect("/");
+    }
+  });
+};
+
 exports.getSettings = (req, res) => {
   res.render("settings", {
     title: "Settings",
   });
 };
 
-exports.postSignup = (req, res) => {
+exports.postSignup = (req, res) => {};
 
-}
+exports.postLogin = (req, res) => {};
 
-exports.postLogin = (req, res) => {
-
-}
-
-exports.postSettings = (req, res) => {
-
-}
+exports.postSettings = (req, res) => {};
