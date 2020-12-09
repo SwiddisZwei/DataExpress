@@ -40,5 +40,6 @@ app.post("/login", urlEncodedParser, routes.postLogin);
 app.get("/logout", routes.logout);
 app.get("/settings", checkAuth, routes.getSettings);
 app.post("/settings", checkAuth, urlEncodedParser, routes.postSettings);
+app.get("/api", routes.getData);
 
 app.listen(3000);

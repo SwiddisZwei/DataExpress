@@ -71,3 +71,7 @@ exports.logout = (req, res) => {
     }
   });
 };
+
+exports.getData = (req, res) => {
+  // TODO
+}
