@@ -1,3 +1,4 @@
+const { urlencoded } = require("body-parser");
 const express = require("express"),
   pug = require("pug"),
   path = require("path"),
@@ -15,8 +16,11 @@ let urlEncodedParser = bodyParser.urlencoded({
 });
 
 app.get("/", routes.index);
-app.get("/signup", routes.signup);
-app.get("/login", urlEncodedParser, routes.login);
-app.get("/settings", routes.settings);
+app.get("/signup", routes.getSignup);
+app.post("/signup", urlEncodedParser, routes.postSignup);
+app.get("/login", routes.getLogin);
+app.post("/login", urlEncodedParser, routes.postLogin);
+app.get("/settings", routes.getSettings);
+app.post("/settings", urlEncodedParser, routes.postSettings);
 
 app.listen(3000);

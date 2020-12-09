@@ -23,19 +23,19 @@ exports.index = (req, res) => {
   });
 };
 
-exports.signup = (req, res) => {
+exports.getSignup = (req, res) => {
   res.render("signup", {
     title: "Sign up",
   });
 };
 
-exports.login = (req, res) => {
+exports.getLogin = (req, res) => {
   res.render("login", {
     title: "Log in",
   });
 };
 
-exports.settings = (req, res) => {
+exports.getSettings = (req, res) => {
   res.render("settings", {
     title: "Settings",
   });

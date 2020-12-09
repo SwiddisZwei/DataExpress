@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{title}
+        link(href='style.css' rel='stylesheet')
+    body
+        div(class='menubtn')
+            a(href='/') Home
+        div(class='menubtn')
+            a(href='/login') Log in
+        div(class='menubtn')
+            a(href='/signup') Sign up
+        div(class='menubtn')
+            a(href='/settings') Settings
+        block content

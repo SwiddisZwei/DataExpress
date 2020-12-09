@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1 Log In
+    form(id='loginForm' method='post' action='/login')
+        p Username:
+            input(type='password' name='username')
+        p Password:
+            input(type='password' name='password')
