@@ -44,18 +44,27 @@ exports.getSettings = (req, res) => {
 };
 
 exports.postSignup = (req, res) => {
-  // TODO
+  let user = new User(req.body);
+  user.password = bcryptjs.hashSync(user.password, 12);
+
+  user.save((err, user) => {
+    if (err) return console.error(err);
+    console.log('New User' + user);
+  })
 };
 
 exports.postLogin = (req, res) => {
   // TODO: Switch to using database for authentication
-  if (req.body.username == "user" && req.body.password == "pass") {
-    req.session.user = {
-      isAuthenticated: true,
-      username: req.body.username
+  User.findById(req.body.username, (err, user) => {
+    if (err) return console.error(err);
+    if (bcryptjs.compare(req.body.password, user.password)) {
+      req.session.user = {
+        isAuthenticated: true,
+        username: req.body.username
+      };
     };
-  }
-  res.redirect("/");
+    res.redirect("/");
+  });
 };
 
 exports.postSettings = (req, res) => {
@@ -74,4 +83,4 @@ exports.logout = (req, res) => {
 
 exports.getData = (req, res) => {
   // TODO
-}
+};
