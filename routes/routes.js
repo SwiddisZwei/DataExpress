@@ -49,26 +49,30 @@ exports.postSignup = (req, res) => {
 
   user.save((err, user) => {
     if (err) return console.error(err);
-    console.log('New User' + user);
-  })
+    console.log("New User " + user);
+  });
 };
 
 exports.postLogin = (req, res) => {
-  // TODO: Switch to using database for authentication
   User.findById(req.body.username, (err, user) => {
     if (err) return console.error(err);
     if (bcryptjs.compare(req.body.password, user.password)) {
       req.session.user = {
         isAuthenticated: true,
-        username: req.body.username
+        username: req.body.username,
       };
-    };
+    }
     res.redirect("/");
   });
 };
 
 exports.postSettings = (req, res) => {
-  // TODO
+  User.updateOne(
+    { name: req.session.user.username },
+    req.body,
+    (err, user) => {}
+  );
+  res.redirect("/");
 };
 
 exports.logout = (req, res) => {
