@@ -24,7 +24,7 @@ exports.index = (req, res) => {
 };
 
 exports.signUp = (req, res) => {
-  res.render("signUp", {
+  res.render("signup", {
     title: "Sign up",
   });
 };
