@@ -1,6 +1,8 @@
 extends layout
 
 block content
+    p Current Password:
+        input(type='password' name='currPassword')
     p Password: 
         input(type='password' name='password')
     p Email: 
@@ -27,3 +29,4 @@ block content
             option(value='7+h') 7+ Hours/week
     p
         input(type='submit' value='Modify settings')
+

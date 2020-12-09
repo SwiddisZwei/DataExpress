@@ -2,9 +2,15 @@ const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  "mongodb+srv://admin:admin@cluster.hcukc.mongodb.net/dexpr?retryWrites=true&w=majority"
-);
+mongoose
+  .connect("mongodb://localhost:27017/dexpr", {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .then((res) => console.log("Connected to DB"))
+  .catch((err) => console.error(err));
 
 let mdb = mongoose.connection;
 mdb.on("error", console.error.bind(console, "connection error"));
@@ -15,13 +21,17 @@ let userSchema = mongoose.Schema({
   password: String,
   email: String,
   age: Number,
+  boardGame: String,
+  skillLevel: String,
+  timeSpent: String,
 });
 
-let User = mongoose.model("user_collection", userSchema);
+let User = mongoose.model("user", userSchema);
 
 exports.index = (req, res) => {
   res.render("index", {
     title: "Home",
+    user: req.session.user ? req.session.user.username : undefined,
   });
 };
 
@@ -38,8 +48,12 @@ exports.getLogin = (req, res) => {
 };
 
 exports.getSettings = (req, res) => {
-  res.render("settings", {
-    title: "Settings",
+  User.findOne({ username: req.session.user.username }, (err, user) => {
+    if (err) return console.error(err);
+    res.render("settings", {
+      title: "Settings",
+      settings: user,
+    });
   });
 };
 
@@ -49,12 +63,14 @@ exports.postSignup = (req, res) => {
 
   user.save((err, user) => {
     if (err) return console.error(err);
-    console.log("New User " + user);
+    console.log("New User: " + user);
+
+    this.postLogin(req, res);
   });
 };
 
 exports.postLogin = (req, res) => {
-  User.findById(req.body.username, (err, user) => {
+  User.findOne({ username: req.body.username }, (err, user) => {
     if (err) return console.error(err);
     if (bcryptjs.compare(req.body.password, user.password)) {
       req.session.user = {
@@ -67,12 +83,10 @@ exports.postLogin = (req, res) => {
 };
 
 exports.postSettings = (req, res) => {
-  User.updateOne(
-    { name: req.session.user.username },
-    req.body,
-    (err, user) => {}
-  );
-  res.redirect("/");
+  User.updateOne({ name: req.session.user.username }, req.body, (err, user) => {
+    console.log("Updated user: " + user);
+    res.redirect("/");
+  });
 };
 
 exports.logout = (req, res) => {

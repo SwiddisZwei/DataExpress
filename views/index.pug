@@ -2,3 +2,7 @@ extends layout
 
 block content
     h1 Board Game Player Tracker
+    if user 
+        h3 Currently logged in as #{user}
+    else
+        h3 Currently not logged in
