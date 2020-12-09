@@ -128,7 +128,7 @@ exports.logout = (req, res) => {
 
 exports.getData = (req, res) => {
   User.find((err, users) => {
-    if (user === null || user.length == 0) res.json([]);
+    if (users === null || users.length == 0) res.json([]);
     else res.json(users.map(user => [user.boardGame, user.skillLevel, user.timeSpent]));
   });
 };

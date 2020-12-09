@@ -38,37 +38,37 @@ const processData = (data) => {
   ];
 
   for (let datum of data) {
-    let dataset;
+    let idx;
     switch (datum[0]) {
       case "chess":
-        dataset = 0;
-        break;
-      case "go":
-        dataset = 1;
-        break;
-      case "draughts":
-        dataset = 2;
-        break;
-      case "shogi":
-        dataset = 3;
-    }
-
-    let idx;
-    switch (datum[1]) {
-      case "beginner":
         idx = 0;
         break;
-      case "intermediate":
+      case "go":
         idx = 1;
         break;
-      case "advanced":
+      case "draughts":
         idx = 2;
         break;
-      case "expert":
+      case "shogi":
         idx = 3;
     }
 
-    output.datasets[dataset].data[idx]++;
+    let dataset;
+    switch (datum[1]) {
+      case "beginner":
+        dataset = 0;
+        break;
+      case "intermediate":
+        dataset = 1;
+        break;
+      case "advanced":
+        dataset = 2;
+        break;
+      case "expert":
+        dataset = 3;
+    }
+
+    output.datasets[dataset].data[idx] += 1;
   }
 
   return output;
