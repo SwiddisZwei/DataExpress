@@ -1,4 +1,4 @@
-let ctx = document.getElementById("chart").getContext("2d");
+let sctx = document.getElementById("skillChart").getContext("2d");
 Chart.defaults.global.defaultFontColor = "#f0f7ee";
 
 const processData = (data) => {
@@ -79,7 +79,7 @@ fetch("/api")
   .then((data) => {
     let chartData = processData(data);
 
-    let chart = new Chart(ctx, {
+    let chart = new Chart(sctx, {
       type: "horizontalBar",
       data: chartData,
       options: {
@@ -99,6 +99,9 @@ fetch("/api")
         },
       },
     });
+
+    console.log(chart.data);
+    console.log(chart.options);
 
     chart.update();
   });
