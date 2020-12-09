@@ -8,3 +8,7 @@ block content
         h3 Currently not logged in
     if previousVisit
         p Latest visit: #{previousVisit}
+    br
+    canvas(id='chart')
+    script(src='Chart.min.js')
+    script(src='buildChart.js')

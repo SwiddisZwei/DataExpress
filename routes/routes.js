@@ -127,5 +127,7 @@ exports.logout = (req, res) => {
 };
 
 exports.getData = (req, res) => {
-  // TODO
+  User.find((err, users) => {
+    res.json(users.map(user => [user.boardGame, user.skillLevel, user.timeSpent]));
+  });
 };

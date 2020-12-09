@@ -27,3 +27,7 @@ a {
     text-decoration: none;
     color: #f0f7ee;
 }
+
+#chart {
+    max-width: 800px;
+}
