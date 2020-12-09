@@ -37,6 +37,31 @@ exports.getLogin = (req, res) => {
   });
 };
 
+exports.getSettings = (req, res) => {
+  res.render("settings", {
+    title: "Settings",
+  });
+};
+
+exports.postSignup = (req, res) => {
+  // TODO
+};
+
+exports.postLogin = (req, res) => {
+  // TODO: Switch to using database for authentication
+  if (req.body.username == "user" && req.body.password == "pass") {
+    req.session.user = {
+      isAuthenticated: true,
+      username: req.body.username
+    };
+  }
+  res.redirect("/");
+};
+
+exports.postSettings = (req, res) => {
+  // TODO
+};
+
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -46,15 +71,3 @@ exports.logout = (req, res) => {
     }
   });
 };
-
-exports.getSettings = (req, res) => {
-  res.render("settings", {
-    title: "Settings",
-  });
-};
-
-exports.postSignup = (req, res) => {};
-
-exports.postLogin = (req, res) => {};
-
-exports.postSettings = (req, res) => {};
