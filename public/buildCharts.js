@@ -122,7 +122,7 @@ const processTimeData = (data) => {
   }
 
   for (let point of points) {
-    point.r = Math.round(5 * Math.sqrt(point.r));
+    point.r = Math.round(10 * Math.sqrt(point.r));
   }
 
   return output;
@@ -146,6 +146,10 @@ const buildTimeChart = (data) => {
               "5-6 hrs/week",
               "7+ hrs/week",
             ],
+            ticks: {
+              beginAtZero: true,
+              padding: 25
+            }
           },
         ],
         yAxes: [
@@ -153,6 +157,10 @@ const buildTimeChart = (data) => {
             gridLines: { color: "#60675e", zeroLineColor: "#60675e" },
             type: "category",
             labels: ["Expert", "Advanced", "Intermediate", "Beginner"],
+            ticks: {
+              beginAtZero: true,
+              padding: 25
+            }
           },
         ],
       },
