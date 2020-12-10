@@ -93,10 +93,10 @@ const processTimeData = (data) => {
     "34h": "3-4 hrs/week",
     "56h": "5-6 hrs/week",
     "7+h": "7+ hrs/week",
-    "expert": "Expert",
-    "advanced": "Advanced",
-    "intermediate": "Intermediate",
-    "beginner": "Beginner",
+    expert: "Expert",
+    advanced: "Advanced",
+    intermediate: "Intermediate",
+    beginner: "Beginner",
   };
 
   output.datasets = [
@@ -113,16 +113,13 @@ const processTimeData = (data) => {
     let found = false;
     for (let point of points) {
       if (point.x == dataMap[datum[2]] && point.y == dataMap[datum[1]]) {
-        point.r += 1;
+        point.v += 1;
         found = true;
         break;
       }
     }
-    if (!found) points.push({ x: dataMap[datum[2]], y: dataMap[datum[1]], r: 1 });
-  }
-
-  for (let point of points) {
-    point.r = Math.round(10 * Math.sqrt(point.r));
+    if (!found)
+      points.push({ x: dataMap[datum[2]], y: dataMap[datum[1]], v: 1 });
   }
 
   return output;
@@ -135,40 +132,52 @@ const buildTimeChart = (data) => {
     type: "bubble",
     data: chartData,
     options: {
+      legend: false,
+      tooltips: {
+        enabled: false
+      },
       scales: {
         xAxes: [
           {
             gridLines: { color: "#60675e", zeroLineColor: "#60675e" },
             type: "category",
             labels: [
+              "",
               "0-2 hrs/week",
               "3-4 hrs/week",
               "5-6 hrs/week",
               "7+ hrs/week",
+              "",
             ],
             ticks: {
               beginAtZero: true,
-              padding: 25
-            }
+              padding: 25,
+            },
           },
         ],
         yAxes: [
           {
             gridLines: { color: "#60675e", zeroLineColor: "#60675e" },
             type: "category",
-            labels: ["Expert", "Advanced", "Intermediate", "Beginner"],
+            labels: ["", "Expert", "Advanced", "Intermediate", "Beginner", ""],
             ticks: {
-              beginAtZero: true,
-              padding: 25
-            }
+              beginAtZero: true
+            },
           },
         ],
       },
+      elements: {
+        point: {
+          radius: (context) => {
+            var value = context.dataset.data[context.dataIndex];
+            var size = context.chart.width;
+            var base = Math.sqrt(value.v);
+            return Math.round((size * base) / 85);
+          },
+        },
+      },
     },
   });
-
-  console.log(chartData);
-  console.log(chart);
 };
 
 fetch("/api")
