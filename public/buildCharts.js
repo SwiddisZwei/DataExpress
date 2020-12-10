@@ -102,8 +102,8 @@ const processTimeData = (data) => {
   output.datasets = [
     {
       label: "Players",
-      backgroundColor: "#9ca7d3",
-      borderColor: "#6c77a3",
+      backgroundColor: "#eee1b1",
+      borderColor: "#beb181",
       data: [],
     },
   ];
@@ -134,7 +134,7 @@ const buildTimeChart = (data) => {
     options: {
       legend: false,
       tooltips: {
-        enabled: false
+        enabled: false,
       },
       scales: {
         xAxes: [
@@ -161,7 +161,7 @@ const buildTimeChart = (data) => {
             type: "category",
             labels: ["", "Expert", "Advanced", "Intermediate", "Beginner", ""],
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
             },
           },
         ],
