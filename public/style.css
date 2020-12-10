@@ -28,6 +28,6 @@ a {
     color: #f0f7ee;
 }
 
-#skillChart {
+.canvasChart {
     max-width: 800px;
 }

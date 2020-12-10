@@ -9,6 +9,9 @@ block content
     if previousVisit
         p Latest visit: #{previousVisit}
     br
-    canvas(id='skillChart')
+    h2 Distribution of games and skill levels among players
+    canvas(id='skillChart' class='canvasChart')
+    h2 Relationship between time spent weekly and skill level
+    canvas(id='timeChart' class='canvasChart')
     script(src='Chart.min.js')
-    script(src='buildChart.js')
+    script(src='buildCharts.js')
